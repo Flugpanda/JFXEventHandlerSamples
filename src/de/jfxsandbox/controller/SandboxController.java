@@ -106,10 +106,20 @@ public class SandboxController {
 			textAreaToFill.appendText("Button Action\n");
 		});
 		
+		// Handle CheckBox events
+		myCheckBox.setOnAction((event) -> {
+			
+			if (myCheckBox.isSelected()) {
+				textAreaToFill.appendText("CheckBox is now checked.\n");
+			}else {
+				textAreaToFill.appendText("CheckBox is now unchecked.\n");
+			}
+		});
+		
 		// Handle ComboBox event.
 		myComboBox.setOnAction((event) -> {
 		    Person selectedPerson = myComboBox.getSelectionModel().getSelectedItem();
-		    System.out.println("ComboBox Action (selected: " + selectedPerson.toString() + ")");
+		    textAreaToFill.appendText("ComboBox Action (selected: " + selectedPerson.toString() + ")\n");
 		});
 	}
 		
