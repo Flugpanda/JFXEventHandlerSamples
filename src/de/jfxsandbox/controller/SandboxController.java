@@ -51,13 +51,35 @@ public class SandboxController {
      */
 	@FXML
 	private void initialize() {
-		// init components
+		// init special components
 		initComboBox();
+		initListView();
 		
 		// register all event handlers
 		hookEventhandlers();
 	}
 	
+	/**
+	 * This tells the ListView how to render our Person objects
+	 */
+	private void initListView() {
+		// Define rendering of the list of values in ListView
+		myListView.setCellFactory((list) -> {
+			return new ListCell<Person>() {
+				@Override
+		        protected void updateItem(Person item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		                setText(null);
+		            } else {
+		                setText(item.getFirstName() + " " + item.getLastName());
+		            }
+		        }
+			};
+		});
+	}
+
 	/**
 	 * This tells the ComboBox how to render our Person objects
 	 */
@@ -108,7 +130,6 @@ public class SandboxController {
 		
 		// Handle CheckBox events
 		myCheckBox.setOnAction((event) -> {
-			
 			if (myCheckBox.isSelected()) {
 				textAreaToFill.appendText("CheckBox is now checked.\n");
 			}else {
@@ -121,6 +142,16 @@ public class SandboxController {
 		    Person selectedPerson = myComboBox.getSelectionModel().getSelectedItem();
 		    textAreaToFill.appendText("ComboBox Action (selected: " + selectedPerson.toString() + ")\n");
 		});
+		
+		// Handle ListView with Change Listener
+		myListView.getSelectionModel()
+			// gives us access to this property
+			.selectedItemProperty()
+			// expects a ChangeListener every time something the selection changes
+			.addListener((observable, oldValue, newValue) -> {
+				textAreaToFill.appendText("ListView Selection Changed (selected: " + newValue.toString() + ")");
+		});
+		
 	}
 		
     /**
@@ -133,5 +164,8 @@ public class SandboxController {
 		
 		// init items for the combo box
 		myComboBox.setItems(mainApp.getPersonList());
+		
+		// init items for the list view
+		myListView.setItems(mainApp.getPersonList());
 	}
 }
