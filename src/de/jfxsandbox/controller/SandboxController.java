@@ -137,7 +137,7 @@ public class SandboxController {
 			}
 		});
 		
-		// Handle ComboBox event.
+		// Handle ComboBox event
 		myComboBox.setOnAction((event) -> {
 		    Person selectedPerson = myComboBox.getSelectionModel().getSelectedItem();
 		    textAreaToFill.appendText("ComboBox Action (selected: " + selectedPerson.toString() + ")\n");
@@ -149,9 +149,22 @@ public class SandboxController {
 			.selectedItemProperty()
 			// expects a ChangeListener every time something the selection changes
 			.addListener((observable, oldValue, newValue) -> {
-				textAreaToFill.appendText("ListView Selection Changed (selected: " + newValue.toString() + ")");
+				textAreaToFill.appendText("ListView Selection Changed (selected: " + newValue.toString() + ")\n");
 		});
 		
+		// Handle Slider value change events
+		mySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			textAreaToFill.appendText("Slider Value Changed (Value: " + newValue.toString() + ")\n");
+		});
+		
+		// // Handle TextField enter key event
+		myTextFiled.setOnAction((event) -> {
+			textAreaToFill.appendText("TextField Action");
+		});
+		
+		myTextFiled.textProperty().addListener((observable, oldValue, newValue) -> {
+			textAreaToFill.appendText("TextField Text Changed (Value: " + newValue.toString() + ")\n");
+		});
 	}
 		
     /**
