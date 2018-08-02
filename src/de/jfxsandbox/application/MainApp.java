@@ -2,6 +2,7 @@ package de.jfxsandbox.application;
 
 import java.io.IOException;
 
+import de.jfxsandbox.controller.RootLayoutController;
 import de.jfxsandbox.controller.SandboxController;
 import de.jfxsandbox.moddel.Person;
 import javafx.application.Application;
@@ -63,6 +64,10 @@ public class MainApp extends Application{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("../view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
+			
+			// load the referenced controller from the fxml
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
 			
 			// create a new scene
 			Scene scene = new Scene(rootLayout);
